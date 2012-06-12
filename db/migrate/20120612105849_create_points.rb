@@ -1,7 +1,6 @@
-class CreateResources < ActiveRecord::Migration
+class CreatePoints < ActiveRecord::Migration
   def change
-    create_table :resources do |t|
-      t.string :Stream
+    create_table :points do |t|
       t.decimal :lat, :precision => 15, :scale => 10
       t.decimal :lng, :precision => 15, :scale => 10
 
