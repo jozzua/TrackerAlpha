@@ -27,8 +27,28 @@
     var marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
-      title: "Current Location"
+      animation: google.maps.Animation.DROP
     });
+
+
+    var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<strong>Last Location</strong><br>'+
+        '<p id="firstHeading" class="firstHeading"><% @points.find(1) do |point| %> <%= point.lng %>, <%= point.lat %>,' + 
+        '<br> <%=point.updated_at %> <% end %> </p>'+
+
+        '</div>';
+
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+   infowindow.open(map,marker);
+});
+infowindow.open(map,marker);
+
 
 
     var travelCoordinates = [
@@ -53,4 +73,5 @@
 </head>
 <body onload="initialize()">
   <div id="map_canvas"></div>
+
 </body>

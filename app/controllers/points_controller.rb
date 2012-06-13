@@ -2,7 +2,7 @@ class PointsController < ApplicationController
   # GET /points
   # GET /points.json
   def index
-    @points = Point.find(:all, :order => "id desc", :limit => 5)
+    @points = Point.find(:all, :order => "id desc", :limit => 10)
 
     respond_to do |format|
       format.html # index.html.erb
