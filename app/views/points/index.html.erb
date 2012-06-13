@@ -1,25 +1,56 @@
-<h1>Listing points</h1>
 
-<table>
-  <tr>
-    <th>Lat</th>
-    <th>Lng</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @points.each do |point| %>
-  <tr>
-    <td><%= point.lat %></td>
-    <td><%= point.lng %></td>
-    <td><%= link_to 'Show', point %></td>
-    <td><%= link_to 'Edit', edit_point_path(point) %></td>
-    <td><%= link_to 'Destroy', point, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
 
-<br />
 
-<%= link_to 'New Point', new_point_path %>
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+
+  function initialize() {
+    <% @points.each do |point| %>
+    var myLatLng = new google.maps.LatLng(<%= point.lng %>, <%= point.lat %>);
+    <% end %>
+
+
+    var myOptions = {
+      zoom: 16,
+      center: myLatLng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      title: "Current Location"
+    });
+
+
+    var travelCoordinates = [
+
+    <% @points.each do |point| %>
+        new google.maps.LatLng(<%= point.lng %>, <%= point.lat %>),
+    <% end %>
+    
+    ];
+
+    var travelPath = new google.maps.Polyline({
+      path: travelCoordinates,
+      strokeColor: "#FF0000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+
+    travelPath.setMap(map);
+
+  }
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map_canvas"></div>
+</body>
