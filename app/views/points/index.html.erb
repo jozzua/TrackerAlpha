@@ -11,7 +11,7 @@
 <script type="text/javascript">
 
   function initialize() {
-    <% @points.each do |point| %>
+    <% @points.find(1) do |point| %>
     var myLatLng = new google.maps.LatLng(<%= point.lng %>, <%= point.lat %>);
     <% end %>
 
