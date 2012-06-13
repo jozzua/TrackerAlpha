@@ -1,7 +1,6 @@
 
 class StaticPagesController < ApplicationController
   
-  resource Point
 
   def home
     @points = Point.last
